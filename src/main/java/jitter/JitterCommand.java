@@ -6,6 +6,7 @@ import java.io.IOException;
 import java.io.InputStream;
 
 import org.eclipse.jgit.api.Git;
+import org.eclipse.jgit.api.Status;
 import org.eclipse.jgit.api.errors.GitAPIException;
 import org.eclipse.jgit.errors.NoWorkTreeException;
 import org.eclipse.jgit.lib.Repository;
@@ -54,9 +55,7 @@ public class JitterCommand implements Runnable {
                     final File repositoryDir = new File(repository + "/.git");
                     if (repositoryDir.exists() && repositoryDir.isDirectory()) {
                         final Repository repo = new FileRepositoryBuilder().setGitDir(repositoryDir).build();
-                        final Git git = new Git(repo);
-                        final boolean isClean = git.status().call().isClean();
-                        System.out.println(String.format("%s is clean? %s", repositoryDir, isClean));
+                        System.out.println(getStatusMetrics(repo));
                     }
                 }
             } catch (IOException | NoWorkTreeException | GitAPIException e) {
@@ -64,4 +63,16 @@ public class JitterCommand implements Runnable {
             }
         }        
     }
+
+    private String getStatusMetrics(final Repository repository)
+            throws NoWorkTreeException, GitAPIException {
+        final Git git = new Git(repository);
+        final StringBuilder builder = new StringBuilder();
+        builder.append(String.format("%s\n", repository.getWorkTree().getName()));
+        builder.append(String.format("└ [clean]: %b\n", git.status().call().isClean()));
+        git.close();
+        
+        return builder.toString();
+    }
+
 }
