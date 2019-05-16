@@ -65,13 +65,28 @@ public class JitterCommand implements Runnable {
     }
 
     /**
-     * 
+     * TODO Documentation.
      */
     private String getStatusMetrics(final Repository repository) throws NoWorkTreeException, GitAPIException {
         final var git = new Git(repository);
         final var builder = new StringBuilder();
-        builder.append(String.format("%s\n", repository.getWorkTree().getName()));
-        builder.append(String.format("└ [clean]: %b\n", git.status().call().isClean()));
+        final var status = git.status().call();
+
+        final var isClean = status.isClean();
+
+        builder.append(String.format("[%s]\n", repository.getWorkTree().getName()));
+        builder.append(String.format("clean: %b\n", isClean));
+
+        // Modified files
+        final var modified = status.getModified();
+        if (!isClean && !modified.isEmpty())
+            builder.append(String.format("modified: %s\n", modified.toString()));
+
+        // Untracked files
+        final var untracked = status.getUntracked();
+        if (!isClean && !untracked.isEmpty())
+            builder.append(String.format("untracked: %s\n", untracked.toString()));
+
         git.close();
         
         return builder.toString();
