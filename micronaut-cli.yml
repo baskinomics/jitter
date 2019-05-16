@@ -1,0 +1,5 @@
+profile: cli
+defaultPackage: jitter
+---
+testFramework: junit
+sourceLanguage: java
