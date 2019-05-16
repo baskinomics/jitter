@@ -47,15 +47,13 @@ public class Report {
     public String generateReport() {
         final var builder = new StringBuilder();
         try {
-            builder.append(String.format("[%s -> %s]\n", 
-                    this.repository.getWorkTree().getName(), 
-                    this.repository.getBranch()));
+            builder.append(String.format("[%s : %s]\n", 
+            this.repository.getWorkTree().getName(), 
+            this.repository.getBranch()));
 
-            // Determine if the repository is in a clean state.
-            final var isClean = status.isClean();
-            builder.append(String.format("clean: %b\n", isClean));
-
-            if (!isClean) {
+            if (status.isClean()) 
+                builder.append("CLEAN\n");
+            else {
                 // Modified files
                 final var modified = status.getModified();
                 if (!modified.isEmpty())
