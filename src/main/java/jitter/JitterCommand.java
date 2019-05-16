@@ -6,7 +6,6 @@ import java.io.IOException;
 import java.io.InputStream;
 
 import org.eclipse.jgit.api.Git;
-import org.eclipse.jgit.api.Status;
 import org.eclipse.jgit.api.errors.GitAPIException;
 import org.eclipse.jgit.errors.NoWorkTreeException;
 import org.eclipse.jgit.lib.Repository;
@@ -29,6 +28,7 @@ public class JitterCommand implements Runnable {
     private File config;
 
     /**
+     * Runs a Picoli-based command in a Micronaut application context.
      * 
      * @param args
      * @throws Exception
@@ -43,10 +43,10 @@ public class JitterCommand implements Runnable {
     public void run() {
         if (config.exists() && config.isFile()) {
             // Instantiate YAML instance
-            final Yaml yaml = new Yaml(new Constructor(Config.class));
+            final var yaml = new Yaml(new Constructor(Config.class));
             try {
                 // Should this be using the class loader? Can't remember.
-                final InputStream inputStream = new FileInputStream(config);
+                final var inputStream = new FileInputStream(config);
                 // Deserialize yaml file to config instance
                 final Config config = yaml.load(inputStream);
                 // 
@@ -64,10 +64,12 @@ public class JitterCommand implements Runnable {
         }        
     }
 
-    private String getStatusMetrics(final Repository repository)
-            throws NoWorkTreeException, GitAPIException {
-        final Git git = new Git(repository);
-        final StringBuilder builder = new StringBuilder();
+    /**
+     * 
+     */
+    private String getStatusMetrics(final Repository repository) throws NoWorkTreeException, GitAPIException {
+        final var git = new Git(repository);
+        final var builder = new StringBuilder();
         builder.append(String.format("%s\n", repository.getWorkTree().getName()));
         builder.append(String.format("└ [clean]: %b\n", git.status().call().isClean()));
         git.close();
