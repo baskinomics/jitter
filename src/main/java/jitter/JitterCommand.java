@@ -15,6 +15,7 @@ import org.yaml.snakeyaml.constructor.Constructor;
 
 import io.micronaut.configuration.picocli.PicocliRunner;
 import jitter.config.Config;
+import jitter.domain.model.Report;
 import picocli.CommandLine.Command;
 import picocli.CommandLine.Option;
 
@@ -54,42 +55,14 @@ public class JitterCommand implements Runnable {
                     //
                     final File repositoryDir = new File(repository + "/.git");
                     if (repositoryDir.exists() && repositoryDir.isDirectory()) {
-                        final Repository repo = new FileRepositoryBuilder().setGitDir(repositoryDir).build();
-                        System.out.println(getStatusMetrics(repo));
+                        final var repo = new FileRepositoryBuilder().setGitDir(repositoryDir).build();
+                        final var report = new Report(repo);
+                        System.out.println(report.generateReport());
                     }
                 }
-            } catch (IOException | NoWorkTreeException | GitAPIException e) {
+            } catch (IOException | NoWorkTreeException e) {
                 e.printStackTrace();
             }
         }        
     }
-
-    /**
-     * TODO Documentation.
-     */
-    private String getStatusMetrics(final Repository repository) throws NoWorkTreeException, GitAPIException {
-        final var git = new Git(repository);
-        final var builder = new StringBuilder();
-        final var status = git.status().call();
-
-        final var isClean = status.isClean();
-
-        builder.append(String.format("[%s]\n", repository.getWorkTree().getName()));
-        builder.append(String.format("clean: %b\n", isClean));
-
-        // Modified files
-        final var modified = status.getModified();
-        if (!isClean && !modified.isEmpty())
-            builder.append(String.format("modified: %s\n", modified.toString()));
-
-        // Untracked files
-        final var untracked = status.getUntracked();
-        if (!isClean && !untracked.isEmpty())
-            builder.append(String.format("untracked: %s\n", untracked.toString()));
-
-        git.close();
-        
-        return builder.toString();
-    }
-
 }
