@@ -38,18 +38,18 @@ To build an artifact, clone the repository and run:
 
 ```bash
 $ java -jar build/libs/jitter-0.1.jar -c /home/zoo/development/git/config.yaml
-[monastery]
-clean: false
-untracked: [vscode-workspaces/jitter.code-workspace]
-
-[jitter]
-clean: false
-modified: [src/main/java/jitter/config/Config.java, src/main/java/jitter/JitterCommand.java]
-
-[git-docs]
+[monastery -> master]
 clean: true
 
-[resume]
+[jitter -> master]
+clean: false
+modified: [src/main/java/jitter/JitterCommand.java]
+untracked: [src/main/java/jitter/domain/model/Report.java]
+
+[git-docs -> master]
+clean: true
+
+[resume -> master]
 clean: true
 ```
 
