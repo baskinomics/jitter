@@ -10,4 +10,5 @@ out/
 *.iws
 .project
 .settings
-.classpath
+.classpathc
+bin/
