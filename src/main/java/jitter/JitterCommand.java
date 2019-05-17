@@ -115,8 +115,6 @@ public class JitterCommand implements Runnable {
         final var loggerConfig = loggerContext.getConfiguration();
         loggerConfig.getRootLogger().setLevel(level);
         loggerContext.updateLoggers();
-
-        logger.log(Level.DEBUG, "verbose: {}", verbose);
         logger.log(Level.DEBUG, "Root logger level has been set to {}.", level.name());
     }
 }
