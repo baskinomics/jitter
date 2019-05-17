@@ -31,23 +31,24 @@ repositories:
 To build an artifact, clone the repository and run:
 
 ```bash
-./gradlew build
+$ ./gradlew build
 ```
 
 ## Example
 
 ```bash
 $ java -jar build/libs/jitter-0.1.jar -c /home/zoo/development/git/config.yaml
-[monastery : master]
+[monastery:master]
 CLEAN
 
-[jitter : master]
-modified: [src/main/java/jitter/domain/model/Report.java]
+[jitter:master]
+modified: src/main/java/jitter/domain/model/Report.java
+modified: src/test/java/jitter/JitterCommandTest.java
 
-[git-docs : master]
+[git-docs:master]
 CLEAN
 
-[resume : master]
+[resume:master]
 CLEAN
 ```
 
