@@ -3,7 +3,12 @@ package jitter;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
+import org.eclipse.jgit.api.errors.GitAPIException;
 import org.eclipse.jgit.errors.NoWorkTreeException;
 import org.eclipse.jgit.storage.file.FileRepositoryBuilder;
 import org.yaml.snakeyaml.Yaml;
@@ -15,12 +20,21 @@ import jitter.domain.model.Report;
 import picocli.CommandLine.Command;
 import picocli.CommandLine.Option;
 
+/**
+ * 
+ */
 @Command(name = "jitter", description = "Reports on the status of your git repositories.", mixinStandardHelpOptions = true)
 public class JitterCommand implements Runnable {
 
+    /**
+     * 
+     */
     @Option(names = { "-v", "--verbose" }, description = "...")
     boolean verbose;
 
+    /**
+     * 
+     */
     @Option(names = { "-c", "--config" }, description = "The configuration file to use.")
     private File config;
 
@@ -38,6 +52,7 @@ public class JitterCommand implements Runnable {
      * TODO Documentaton.
      */
     public void run() {
+        // TODO Set a default git directory.
         if (config.exists() && config.isFile()) {
             // Instantiate YAML instance
             final var yaml = new Yaml(new Constructor(Config.class));
@@ -46,16 +61,22 @@ public class JitterCommand implements Runnable {
                 final var inputStream = new FileInputStream(config);
                 // Deserialize yaml file to config instance
                 final Config config = yaml.load(inputStream);
-                // 
-                for (String repository : config.getRepositories()) {
-                    //
-                    final File repositoryDir = new File(repository + "/.git");
-                    if (repositoryDir.exists() && repositoryDir.isDirectory()) {
-                        final var repo = new FileRepositoryBuilder().setGitDir(repositoryDir).build();
-                        final var report = new Report(repo);
+                //
+                final var statusReports = new ArrayList<Report>();
+                statusReports.addAll(
+                    config.getRepositories().stream()
+                        .flatMap(repo -> Stream.of(new File(repo + "/.git")))
+                        .filter(repo -> repo.exists() && repo.isDirectory())
+                        .flatMap(repo -> Stream.of(new Report(repo)))
+                        .collect(Collectors.toList()));
+
+                statusReports.forEach(report -> {
+                    try {
                         System.out.println(report.generateReport());
+                    } catch (NoWorkTreeException | GitAPIException | IOException e) {
+                        e.printStackTrace();
                     }
-                }
+                });
             } catch (IOException | NoWorkTreeException e) {
                 e.printStackTrace();
             }
