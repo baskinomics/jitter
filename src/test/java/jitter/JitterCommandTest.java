@@ -6,10 +6,25 @@ import io.micronaut.context.env.Environment;
 
 import java.io.ByteArrayOutputStream;
 import java.io.PrintStream;
+
+import jitter.JitterCommand;
+
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 public class JitterCommandTest {
+
+    // @Test
+    // public void testWithCommandLineOption() {
+    //     ByteArrayOutputStream baos = new ByteArrayOutputStream();
+    //     System.setOut(new PrintStream(baos));
+
+    //     try (ApplicationContext ctx = ApplicationContext.run(Environment.CLI, Environment.TEST)) {
+    //         String[] args = new String[] { "-v" };
+    //         PicocliRunner.run(JitterCommand.class, ctx, args);
+
+    //     }
+    // }
 
 }

@@ -1,5 +1,5 @@
 profile: cli
-defaultPackage: com.baskinomics.jitter
+defaultPackage: jitter
 ---
 testFramework: junit
 sourceLanguage: java

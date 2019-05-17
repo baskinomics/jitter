@@ -1,4 +1,4 @@
-package com.baskinomics.jitter.config;
+package jitter.config;
 
 import java.util.ArrayList;
 import java.util.Collections;
