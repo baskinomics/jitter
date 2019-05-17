@@ -42,8 +42,9 @@ public class Report {
      */
     public String generateReport() throws NoWorkTreeException, GitAPIException, IOException {
         final var repository = new FileRepositoryBuilder().setGitDir(gitDirectory).build();
-        final var status = Git.open(gitDirectory).status().call();
-        final var builder = new StringBuilder();
+        final var status     = Git.open(gitDirectory).status().call();
+        final var builder    = new StringBuilder();
+        
         try {
             builder.append("\u001B[1m");
             builder.append(String.format("[%s:%s]", 
