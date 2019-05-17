@@ -1,21 +1,22 @@
 package jitter.service.impl;
 
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
-import java.util.Optional;
-
-import javax.inject.Singleton;
-
 import jitter.config.Config;
 import jitter.service.ConfigService;
-
 import org.apache.logging.log4j.Level;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.yaml.snakeyaml.Yaml;
 import org.yaml.snakeyaml.constructor.Constructor;
 
+import javax.inject.Singleton;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.util.Optional;
+
+/**
+ * TODO Documentation.
+ */
 @Singleton
 public class ConfigServiceImpl implements ConfigService {
 
@@ -28,10 +29,10 @@ public class ConfigServiceImpl implements ConfigService {
      * {@inheritDoc}
      */
     @Override
-    public Config getConfig(Optional<File> file) {
+    public Config getConfig(final Optional<File> file) {
         if (file.isPresent() && file.get().exists() && file.get().isFile()) {
-            logger.log(Level.DEBUG, "Configuration file [{}] is being used.", 
-                file.get().getAbsolutePath());
+            logger.log(Level.DEBUG, "Configuration file [{}] is being used.",
+                    file.get().getAbsolutePath());
 
             // Instantiate YAML instance
             final var yaml = new Yaml(new Constructor(Config.class));
@@ -49,5 +50,5 @@ public class ConfigServiceImpl implements ConfigService {
             return new Config();
         }
     }
-    
+
 }

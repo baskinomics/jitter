@@ -1,18 +1,20 @@
 package jitter.service;
 
+import jitter.config.Config;
+
 import java.io.File;
 import java.util.Optional;
 
-import jitter.config.Config;
-
 /**
- * 
+ * TODO Documentation.
  */
 public interface ConfigService {
     /**
-     * 
-     * @param file
-     * @return
+     * Provides a {@link Config} instance that is either deserialized from the given {@code file} value if present, or
+     * a new instance if not.
+     *
+     * @param file TODO
+     * @return TODO
      */
     Config getConfig(Optional<File> file);
 }

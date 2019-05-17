@@ -1,16 +1,15 @@
 package jitter.service;
 
-import java.io.IOException;
-import java.util.List;
-
 import jitter.config.Config;
 import jitter.domain.model.Report;
-
 import org.eclipse.jgit.api.errors.GitAPIException;
 import org.eclipse.jgit.errors.NoWorkTreeException;
 
+import java.io.IOException;
+import java.util.List;
+
 /**
- * 
+ * TODO Documentation.
  */
 public interface ReportService {
     /**
@@ -18,16 +17,17 @@ public interface ReportService {
      * 
      * @param report The report for which an output is to be generated.
      * @return The pretty-printed string.
-     * @throws NoWorkTreeException
-     * @throws GitAPIException
-     * @throws IOException
+     * @throws NoWorkTreeException TODO
+     * @throws GitAPIException TODO
+     * @throws IOException TODO
      */
     String getReportOutput(Report report) throws NoWorkTreeException, GitAPIException, IOException;
 
     /**
+     * Returns a collection of {@link Report} instances for the given {@code config}.
      *
-     * @param config
-     * @return
+     * @param config TODO
+     * @return TODO
      */
     List<Report> getReports(Config config);
 }

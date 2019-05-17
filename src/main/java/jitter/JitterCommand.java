@@ -1,15 +1,8 @@
 package jitter;
 
-import java.io.File;
-import java.io.IOException;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Optional;
-import java.util.stream.Collectors;
-import java.util.stream.Stream;
-
-import javax.inject.Inject;
-
+import io.micronaut.configuration.picocli.PicocliRunner;
+import jitter.service.ConfigService;
+import jitter.service.ReportService;
 import org.apache.logging.log4j.Level;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -17,13 +10,15 @@ import org.apache.logging.log4j.core.LoggerContext;
 import org.apache.logging.log4j.core.config.LoggerConfig;
 import org.eclipse.jgit.api.errors.GitAPIException;
 import org.eclipse.jgit.errors.NoWorkTreeException;
-
-import io.micronaut.configuration.picocli.PicocliRunner;
-import jitter.domain.model.Report;
-import jitter.service.ConfigService;
-import jitter.service.ReportService;
 import picocli.CommandLine.Command;
 import picocli.CommandLine.Option;
+
+import javax.inject.Inject;
+import java.io.File;
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Optional;
 
 /**
  * TODO Documentation.
@@ -51,24 +46,30 @@ public class JitterCommand implements Runnable {
     @Option(names = {"-c", "--config"}, description = "The configuration file to use.")
     private File configFile;
 
+    /**
+     * TODO Documentation.
+     */
     @Inject
     public ConfigService configService;
 
+    /**
+     * TODO Documentation.
+     */
     @Inject
     public ReportService reportService;
 
     /**
      * Runs a Picoli-based command in a Micronaut application context.
      *
-     * @param args
-     * @throws Exception
+     * @param args TODO
+     * @throws Exception TODO
      */
     public static void main(String[] args) throws Exception {
         PicocliRunner.run(JitterCommand.class, args);
     }
 
     /**
-     * TODO Documentaton.
+     * Business logic of the Picocli command.
      */
     public void run() {
         // Verbosity
@@ -97,7 +98,7 @@ public class JitterCommand implements Runnable {
             try {
                 System.out.println(reportService.getReportOutput(report));
             } catch (NoWorkTreeException | GitAPIException | IOException e) {
-                e.printStackTrace();
+                logger.error(e.getMessage());
             }
         });
     }
@@ -106,8 +107,8 @@ public class JitterCommand implements Runnable {
      * Sets the root logger's level to the given {@code level}.
      *
      * @param level The {@link Level} to set.
-     * @see LoggerContext
-     * @see LoggerConfig
+     * @see LoggerContext TODO
+     * @see LoggerConfig TODO
      */
     private void setRootLoggerLevel(final Level level) {
         final var loggerContext = (LoggerContext) LogManager.getContext(false);
