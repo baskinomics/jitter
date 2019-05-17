@@ -29,5 +29,6 @@ bin/
 *.class
 
 .classpath
+.factorypath
 
 .vscode
