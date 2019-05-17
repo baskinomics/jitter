@@ -1,4 +1,4 @@
-package jitter.domain.model;
+package com.baskinomics.jitter.domain.model;
 
 import java.io.File;
 import java.io.IOException;
@@ -9,6 +9,10 @@ import org.eclipse.jgit.errors.NoWorkTreeException;
 import org.eclipse.jgit.lib.Repository;
 import org.eclipse.jgit.storage.file.FileRepositoryBuilder;
 
+import org.apache.logging.log4j.Logger;
+import org.apache.logging.log4j.Level;
+import org.apache.logging.log4j.LogManager;
+
 /**
  * The class {@code Report} represents a stylized and formatted result of invoking the {@code git status} command.
  * 
@@ -17,6 +21,11 @@ import org.eclipse.jgit.storage.file.FileRepositoryBuilder;
  * @see Status
  */
 public class Report {
+    /**
+     * Class logger.
+     */
+    private static final Logger logger = LogManager.getLogger(Report.class);
+
     /**
      * The {@link File} instance representing the git directory.
      */
@@ -46,26 +55,35 @@ public class Report {
         final var builder    = new StringBuilder();
         
         try {
+            logger.log(Level.DEBUG, "Generating report for {}:{}", repository.getWorkTree().getName(), repository.getBranch());
+
             builder.append("\u001B[1m");
             builder.append(String.format("[%s:%s]", 
                 repository.getWorkTree().getName(), 
                 repository.getBranch()));
             builder.append("\u001b[0m\n");
 
+            logger.debug("isClean: {}", status.isClean());
             if (status.isClean()) {
                 builder.append("CLEAN\n");
             } else {
                 // Added
                 if (!status.getAdded().isEmpty())
-                    status.getAdded().forEach(file -> builder.append(String.format("\u001B[32madded: %s\u001b[0m\n", file)));
+                    status.getAdded().forEach(file -> {
+                        builder.append(String.format("\u001B[32madded: %s\u001b[0m\n", file));    
+                    });
 
                 // Modified files
                 if (!status.getModified().isEmpty())
-                    status.getModified().forEach(file -> builder.append(String.format("\u001B[31mmodified: %s\u001b[0m\n", file)));
+                    status.getModified().forEach(file -> {
+                        builder.append(String.format("\u001B[31mmodified: %s\u001b[0m\n", file));
+                    });
 
                 // Untracked files
                 if (!status.getUntracked().isEmpty())
-                    status.getUntracked().forEach(file -> builder.append(String.format("\u001B[31muntracked: %s\u001b[0m\n", file)));
+                    status.getUntracked().forEach(file -> {
+                        builder.append(String.format("\u001B[31muntracked: %s\u001b[0m\n", file));
+                    });
 
                 // Removed files
                 if (!status.getRemoved().isEmpty())

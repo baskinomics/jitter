@@ -1,4 +1,4 @@
-package jitter.config;
+package com.baskinomics.jitter.config;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -31,8 +31,9 @@ public class Config {
     }
 
     /**
-     * Sets the 
-     * @param repositories
+     * Clears {@link this#repositories} and adds the given {@code repositories}.
+     * 
+     * @param repositories The repositories to set.
      */
     public void setRepositories(final ArrayList<String> repositories) {
         this.repositories.clear();
