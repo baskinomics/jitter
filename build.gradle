@@ -35,7 +35,8 @@ dependencies {
     compile "io.micronaut:micronaut-inject"
     compile "io.micronaut:micronaut-validation"
     compile group: 'org.eclipse.jgit', name: 'org.eclipse.jgit', version: '5.3.0.201903130848-r'
-    compile 'org.slf4j:slf4j-nop:1.7.25' 
+    compile group: 'org.apache.logging.log4j', name: 'log4j-api', version: '2.11.2'
+    compile group: 'org.apache.logging.log4j', name: 'log4j-core', version: '2.11.2'
     testAnnotationProcessor "io.micronaut:micronaut-inject-java"
     testCompile "org.junit.jupiter:junit-jupiter-api"
     testCompile "io.micronaut.test:micronaut-test-junit5"
