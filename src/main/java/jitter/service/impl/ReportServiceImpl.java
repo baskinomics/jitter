@@ -44,10 +44,11 @@ public class ReportServiceImpl implements ReportService {
         builder.append(String.format("[%s:%s]",
                 repository.getWorkTree().getName(),
                 repository.getBranch()));
-        builder.append("\u001b[0m\n");
+        builder.append("\u001b[0m");
 
         logger.debug("isClean: {}", status.isClean());
         if (!status.isClean()) {
+            builder.append("\n");
             // Added
             if (!status.getAdded().isEmpty())
                 status.getAdded().forEach(file -> {
@@ -70,7 +71,7 @@ public class ReportServiceImpl implements ReportService {
             if (!status.getRemoved().isEmpty())
                 status.getRemoved().forEach(file -> builder.append(String.format("\u001B[31mremoved: %s\u001b[0m\n", file)));
         } else {
-            builder.append("CLEAN\n");
+            builder.append(" CLEAN\n");
         }
 
         return builder.toString();

@@ -47,6 +47,7 @@ public class ConfigServiceImpl implements ConfigService {
                 return new Config();
             }
         } else {
+            logger.log(Level.DEBUG, "No config file provided.");
             return new Config();
         }
     }

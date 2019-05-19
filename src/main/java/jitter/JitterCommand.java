@@ -26,7 +26,10 @@ import java.util.Optional;
  *
  * @author Sean Baskin
  */
-@Command(name = "jitter", description = "Reports on the status of your git repositories.", mixinStandardHelpOptions = true)
+@Command(
+        name = "jitter",
+        description = "Reports on the status of your git repositories.",
+        mixinStandardHelpOptions = true)
 public class JitterCommand implements Runnable {
     /**
      * Class logger.
@@ -104,38 +107,28 @@ public class JitterCommand implements Runnable {
         final var loggerContext = (LoggerContext) LogManager.getContext(false);
         final var loggerConfig = loggerContext.getConfiguration();
         switch (verbosity.size()) {
+            case 0:
+                logger.log(Level.DEBUG, "Option -v was not provided. Using configuration default.");
+                break;
             case 1:
                 loggerConfig.getRootLogger().setLevel(Level.INFO);
                 logger.log(Level.DEBUG, "Root logger level has been set to {}.", Level.INFO);
                 break;
-
             case 2:
                 loggerConfig.getRootLogger().setLevel(Level.DEBUG);
                 logger.log(Level.DEBUG, "Root logger level has been set to {}.", Level.DEBUG);
                 break;
-
             default:
-                // Use the configuration default
+                logger.log(Level.DEBUG, "Using configuration default root logger level {}",
+                        loggerConfig.getRootLogger().getLevel().name());
                 break;
         }
 
         loggerContext.updateLoggers();
-        logger.log(Level.DEBUG, "Loggers have been updated..");
+        logger.log(Level.DEBUG, "Loggers have been updated.");
     }
 
     /**
-     * Sets the root logger's level to the given {@code level}.
-     *
-     * @param level The {@link Level} to set.
-     * @see LoggerContext TODO
-     * @see LoggerConfig TODO
-     */
-    private void setRootLoggerLevel(final Level level) {
-
-    }
-
-    /**
-     *
      * @return
      */
     public File getConfigFile() {
@@ -143,7 +136,6 @@ public class JitterCommand implements Runnable {
     }
 
     /**
-     *
      * @return
      */
     public List<Boolean> getVerbose() {
