@@ -17,6 +17,7 @@ import javax.inject.Inject;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
 
@@ -74,19 +75,7 @@ public class JitterCommand implements Runnable {
     public void run() {
         // Verbosity
         logger.log(Level.INFO, "Checking [-v=<verbose>] flag.");
-        switch (verbose.size()) {
-            case 1:
-                setRootLoggerLevel(Level.INFO);
-                break;
-
-            case 2:
-                setRootLoggerLevel(Level.DEBUG);
-                break;
-
-            default:
-                // Use the configuration default
-                break;
-        }
+        setVerbosity(verbose);
 
         // Config
         logger.log(Level.INFO, "Checking [-c=<config>] flag.");
@@ -104,6 +93,37 @@ public class JitterCommand implements Runnable {
     }
 
     /**
+     * Determines the verbosity level for the given {@code verbosity} and sets the root logger level to a corresponding
+     * value.
+     *
+     * @param verbosity The desired verbosity level.
+     * @see LoggerContext
+     * @see LoggerConfig
+     */
+    private void setVerbosity(final List<Boolean> verbosity) {
+        final var loggerContext = (LoggerContext) LogManager.getContext(false);
+        final var loggerConfig = loggerContext.getConfiguration();
+        switch (verbosity.size()) {
+            case 1:
+                loggerConfig.getRootLogger().setLevel(Level.INFO);
+                logger.log(Level.DEBUG, "Root logger level has been set to {}.", Level.INFO);
+                break;
+
+            case 2:
+                loggerConfig.getRootLogger().setLevel(Level.DEBUG);
+                logger.log(Level.DEBUG, "Root logger level has been set to {}.", Level.DEBUG);
+                break;
+
+            default:
+                // Use the configuration default
+                break;
+        }
+
+        loggerContext.updateLoggers();
+        logger.log(Level.DEBUG, "Loggers have been updated..");
+    }
+
+    /**
      * Sets the root logger's level to the given {@code level}.
      *
      * @param level The {@link Level} to set.
@@ -111,10 +131,22 @@ public class JitterCommand implements Runnable {
      * @see LoggerConfig TODO
      */
     private void setRootLoggerLevel(final Level level) {
-        final var loggerContext = (LoggerContext) LogManager.getContext(false);
-        final var loggerConfig = loggerContext.getConfiguration();
-        loggerConfig.getRootLogger().setLevel(level);
-        loggerContext.updateLoggers();
-        logger.log(Level.DEBUG, "Root logger level has been set to {}.", level.name());
+
+    }
+
+    /**
+     *
+     * @return
+     */
+    public File getConfigFile() {
+        return this.configFile;
+    }
+
+    /**
+     *
+     * @return
+     */
+    public List<Boolean> getVerbose() {
+        return Collections.unmodifiableList(this.verbose);
     }
 }
