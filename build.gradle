@@ -1,13 +1,27 @@
+// Project properties
+
+// The build directory of this project. The build directory is the directory which all artifacts are generated into. 
+// The default value for the build directory is projectDir/build
+// buildDir
+
+
+
 plugins {
-    id "io.spring.dependency-management" version "1.0.6.RELEASE"
     id "java"
+    id "application"
+    id "io.spring.dependency-management" version "1.0.6.RELEASE"
     id "net.ltgt.apt-eclipse" version "0.21"
     id "net.ltgt.apt-idea" version "0.21"
     id "com.github.johnrengelman.shadow" version "4.0.2"
-    id "application"
+}
+
+application {
+  mainClassName "jitter.JitterCommand"
 }
 
 version "0.1"
+// sourceCompatibility = '1.12'
+// targetCompatibility = '1.12'
 group "jitter"
 
 repositories {
@@ -15,29 +29,34 @@ repositories {
     maven { url "https://jcenter.bintray.com" }
 }
 
+// TODO Look back at Micronaut docs for the reason this is required.
 dependencyManagement {
     imports {
         mavenBom 'io.micronaut:micronaut-bom:1.1.1'
     }
 }
 
+// The configurations of this project. 
+// TODO Read more into this subject.
 configurations {
     // for dependencies that are needed for development only
     developmentOnly 
 }
 
+// The dependency handler of this project. The returned dependency handler instance can be used for adding new dependencies. 
+// For accessing already declared dependencies, the configurations can be used. 
 dependencies {
     annotationProcessor "io.micronaut:micronaut-inject-java"
     annotationProcessor "io.micronaut:micronaut-validation"
-    compile "io.micronaut:micronaut-runtime"
     compile "info.picocli:picocli"
+    compile "io.micronaut:micronaut-runtime"
     compile "io.micronaut.configuration:micronaut-picocli"
-    compile "io.micronaut:micronaut-inject"
+    compile "io.micronaut:micronaut-inject-java"
     compile "io.micronaut:micronaut-validation"
-    compile group: 'org.eclipse.jgit', name: 'org.eclipse.jgit', version: '5.3.0.201903130848-r'
-    compile group: 'org.apache.logging.log4j', name: 'log4j-api', version: '2.11.2'
-    compile group: 'org.apache.logging.log4j', name: 'log4j-core', version: '2.11.2'
-    compile 'org.slf4j:slf4j-nop:1.7.25' 
+    compile "org.eclipse.jgit:org.eclipse.jgit:5.3.0.201903130848-r"
+    compile "org.apache.logging.log4j:log4j-api:2.11.2"
+    compile "org.apache.logging.log4j:log4j-core:2.11.2"
+    compile "org.slf4j:slf4j-nop:1.7.25" 
     testAnnotationProcessor "io.micronaut:micronaut-inject-java"
     testCompile "org.junit.jupiter:junit-jupiter-api"
     testCompile "io.micronaut.test:micronaut-test-junit5"
@@ -46,7 +65,6 @@ dependencies {
 }
 
 test.classpath += configurations.developmentOnly
-mainClassName = "jitter.JitterCommand"
 
 jar {
     manifest {
