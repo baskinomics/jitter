@@ -34,6 +34,14 @@ To build an artifact, clone the repository and run:
 $ ./gradlew build
 ```
 
+## Run
+
+To run the application execute the following command:
+
+```bash
+$ ./gradlew run --args="--help"
+```
+
 ## Example
 
 ```bash
