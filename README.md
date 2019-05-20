@@ -3,13 +3,20 @@
 `jitter` is a CLI tool designed to check a developer's git repositories and report if they are in a clean state. The use case envisioned is to utilize `jitter` prior to migrating to a different physical machine or prior to a context switch in projects, where the tool reports on the status of a developer's git repositories at one time.
 
 ```bash
-$ java -jar build/libs/jitter-0.1.jar -h
-Usage: jitter [-hvV] [-c=<config>]
+$ ./gradlew run --args="--help"
+
+> Task :run
+Usage: jitter [-hV] [-v]... [-c=<configFile>]
 Reports on the status of your git repositories.
-  -c, --config=<config>   The configuration file to use.
-  -h, --help              Show this help message and exit.
-  -v, --verbose           ...
-  -V, --version           Print version information and exit.
+  -c, --config=<configFile>
+                  The configuration file to use.
+  -h, --help      Show this help message and exit.
+  -v, --verbose   Verbose mode. Helpful for troubleshooting. Multiple -v options
+                    increase the verbosity.
+  -V, --version   Print version information and exit.
+
+BUILD SUCCESSFUL in 1s
+3 actionable tasks: 1 executed, 2 up-to-date
   ```
 
 ## Configuration
