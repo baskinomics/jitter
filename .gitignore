@@ -14,7 +14,9 @@ out/
 bin/
 
 # Package Files #
-*.jar
+
+# We need to include .jar files for the gradle wrapper
+# *.jar
 *.war
 *.nar
 *.ear
