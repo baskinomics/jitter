@@ -42,21 +42,52 @@ To run the application execute the following command:
 $ ./gradlew run --args="--help"
 ```
 
-## Example
+## Examples
+
+Running `jitter` with a configuration file:
 
 ```bash
-$ java -jar build/libs/jitter-0.1.jar -c /home/zoo/development/git/config.yaml
+$ ./gradlew run --args="-c /home/zoo/development/git/config.yaml"
+
+> Task :run
 [monastery:master]
-CLEAN
+untracked: vscode-workspaces/path.code-workspace
 
 [jitter:master]
-modified: src/main/java/jitter/domain/model/Report.java
 modified: src/test/java/jitter/JitterCommandTest.java
+modified: README.md
+untracked: bin
 
-[git-docs:master]
-CLEAN
+[git-docs:master] CLEAN
 
-[resume:master]
-CLEAN
+[resume:master] CLEAN
+
+
+BUILD SUCCESSFUL in 2s
+3 actionable tasks: 1 executed, 2 up-to-date
 ```
 
+Running `jitter` with the `--verbose` flag:
+
+```bash
+$ ./gradlew run --args="-v -c /home/zoo/development/git/config.yaml"
+
+> Task :run
+INFO  | 2019-05-20 12:01:10 | [main] jitter.JitterCommand (JitterCommand.java:83) - Checking [-v=<verbose>] flag.
+INFO  | 2019-05-20 12:01:10 | [main] jitter.JitterCommand (JitterCommand.java:87) - Checking [-c=<config>] flag.
+INFO  | 2019-05-20 12:01:10 | [main] jitter.JitterCommand (JitterCommand.java:91) - Collating reports.
+[monastery:master]
+untracked: vscode-workspaces/path.code-workspace
+
+[jitter:master]
+modified: src/test/java/jitter/JitterCommandTest.java
+modified: README.md
+
+[git-docs:master] CLEAN
+
+[resume:master] CLEAN
+
+
+BUILD SUCCESSFUL in 2s
+3 actionable tasks: 1 executed, 2 up-to-date
+```
