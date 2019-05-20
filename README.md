@@ -47,47 +47,52 @@ $ ./gradlew run --args="--help"
 Running `jitter` with a configuration file:
 
 ```bash
-$ ./gradlew run --args="-c /home/zoo/development/git/config.yaml"
+$ ./gradlew run --args="-c /path/to/config.yaml"
 
 > Task :run
 [monastery:master]
-untracked: vscode-workspaces/path.code-workspace
+CLEAN
 
 [jitter:master]
-modified: src/test/java/jitter/JitterCommandTest.java
-modified: README.md
-untracked: bin
+modified: src/main/java/jitter/service/impl/ReportServiceImpl.java
+modified: .vscode/launch.json
+modified: build.gradle
 
-[git-docs:master] CLEAN
+[git-docs:master]
+CLEAN
 
-[resume:master] CLEAN
+[resume:master]
+CLEAN
 
 
-BUILD SUCCESSFUL in 2s
+BUILD SUCCESSFUL in 1s
 3 actionable tasks: 1 executed, 2 up-to-date
 ```
 
 Running `jitter` with the `--verbose` flag:
 
 ```bash
-$ ./gradlew run --args="-v -c /home/zoo/development/git/config.yaml"
+$ ./gradlew run --args="-v -c /path/to/config.yaml"
 
 > Task :run
-INFO  | 2019-05-20 12:01:10 | [main] jitter.JitterCommand (JitterCommand.java:83) - Checking [-v=<verbose>] flag.
-INFO  | 2019-05-20 12:01:10 | [main] jitter.JitterCommand (JitterCommand.java:87) - Checking [-c=<config>] flag.
-INFO  | 2019-05-20 12:01:10 | [main] jitter.JitterCommand (JitterCommand.java:91) - Collating reports.
+INFO  | 2019-05-20 15:17:43 | [main] jitter.JitterCommand (JitterCommand.java:87) - Checking [-c=<config>] flag.
+INFO  | 2019-05-20 15:17:43 | [main] jitter.JitterCommand (JitterCommand.java:91) - Collating reports.
 [monastery:master]
-untracked: vscode-workspaces/path.code-workspace
+CLEAN
 
 [jitter:master]
-modified: src/test/java/jitter/JitterCommandTest.java
+modified: src/main/java/jitter/service/impl/ReportServiceImpl.java
+modified: .vscode/launch.json
+modified: build.gradle
 modified: README.md
 
-[git-docs:master] CLEAN
+[git-docs:master]
+CLEAN
 
-[resume:master] CLEAN
+[resume:master]
+CLEAN
 
 
-BUILD SUCCESSFUL in 2s
+BUILD SUCCESSFUL in 1s
 3 actionable tasks: 1 executed, 2 up-to-date
 ```
