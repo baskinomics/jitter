@@ -1,4 +1,4 @@
-package jitter.config;
+package jitter.domain.model;
 
 import java.util.ArrayList;
 import java.util.Collections;

@@ -1,6 +1,6 @@
 package jitter.service;
 
-import jitter.config.Config;
+import jitter.domain.model.Config;
 import jitter.domain.model.Report;
 import org.eclipse.jgit.api.errors.GitAPIException;
 import org.eclipse.jgit.errors.NoWorkTreeException;

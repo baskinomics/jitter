@@ -7,7 +7,7 @@ import org.eclipse.jgit.lib.Repository;
 import java.io.File;
 
 /**
- * The class {@code Report} represents a stylized and formatted result of invoking the {@code git status} command.
+ * The class {@code Report} represenSts a stylized and formatted result of invoking the {@code git status} command.
  *
  * @author Sean Baskin
  * @see Git

@@ -1,6 +1,6 @@
 package jitter.service;
 
-import jitter.config.Config;
+import jitter.domain.model.Config;
 
 import java.io.File;
 import java.util.Optional;

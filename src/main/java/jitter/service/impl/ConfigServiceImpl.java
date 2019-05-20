@@ -1,6 +1,6 @@
 package jitter.service.impl;
 
-import jitter.config.Config;
+import jitter.domain.model.Config;
 import jitter.service.ConfigService;
 import org.apache.logging.log4j.Level;
 import org.apache.logging.log4j.LogManager;
